@@ -6,11 +6,30 @@ package proto;
 service PiGlow {
   // SetLED
   rpc SetLED (LedRequest) returns (Ack) {}
+
+  // Set all LEDs to brightness
+  rpc SetAll (BrightnessRequest) returns (Ack) {}
+  // Set all White LEDs to brightness
+  rpc SetWhite (BrightnessRequest) returns (Ack) {}
+  // Set all Blue LEDs to brightness
+  rpc SetBlue (BrightnessRequest) returns (Ack) {}
+  // Set all Green LEDs to brightness
+  rpc SetGreen (BrightnessRequest) returns (Ack) {}
+  // Set all Yellow LEDs to brightness
+  rpc SetYellow (BrightnessRequest) returns (Ack) {}
+  // Set all Orange LEDs to brightness
+  rpc SetOrange (BrightnessRequest) returns (Ack) {}
+  // Set all Red LEDs to brightness
+  rpc SetRed (BrightnessRequest) returns (Ack) {}
 }
 
 message LedRequest {
   int32 num = 1;
   uint32 brightness = 2;
+}
+
+message BrightnessRequest {
+  uint32 brightness = 1;
 }
 
 message Ack {
