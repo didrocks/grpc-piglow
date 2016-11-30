@@ -7,17 +7,36 @@ import (
 	context "golang.org/x/net/context"
 
 	pb "github.com/didrocks/grpc-piglow/proto"
+	"github.com/oleksandr/bonjour"
 
 	"time"
+
+	"strconv"
 
 	"google.golang.org/grpc"
 )
 
 //go:generate protoc -I ../../proto/ ../../proto/piglow.proto --go_out=plugins=grpc:proto
 func main() {
-	conn, err := grpc.Dial("192.168.0.150:9875", grpc.WithInsecure())
+
+	// get the service ip and port
+	resolver, err := bonjour.NewResolver(nil)
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Fatalf("failed to initialize mdns resolver: %v\n", err.Error())
+	}
+	results := make(chan *bonjour.ServiceEntry)
+	go func() {
+		err = resolver.Lookup("PiGlowGRPC", "_piglow._tcp", "", results)
+		if err != nil {
+			log.Fatalf("failed to find grpc piglow: %v\n", err)
+		}
+		resolver.Exit <- true
+	}()
+	// we only get the first result and connect to it
+	m := <-results
+	conn, err := grpc.Dial(m.AddrIPv4.String()+":"+strconv.Itoa(m.Port), grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("couldn't connect: %v", err)
 	}
 	defer conn.Close()
 
