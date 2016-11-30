@@ -30,10 +30,15 @@ func main() {
 		if err != nil {
 			log.Fatalf("failed to find grpc piglow: %v\n", err)
 		}
-		resolver.Exit <- true
 	}()
 	// we only get the first result and connect to it
-	m := <-results
+	var m *bonjour.ServiceEntry
+	select {
+	case m = <-results:
+	case <-time.After(20 * time.Second):
+		log.Fatalf("no PiGlow service found on the network")
+	}
+	resolver.Exit <- true
 	conn, err := grpc.Dial(m.AddrIPv4.String()+":"+strconv.Itoa(m.Port), grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("couldn't connect: %v", err)
