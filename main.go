@@ -21,7 +21,7 @@ func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error
 	s.p.SetLED((int8)(in.Num), (uint8)(in.Brightness))
 	err := s.p.Apply()
 	if err != nil { // Apply the changes
-		log.Debug("Couldn't apply changes: ", err)
+		log.Println("Couldn't apply changes: ", err)
 	}
 	return &pb.Ack{Ok: true}, err
 }
