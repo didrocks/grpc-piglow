@@ -86,6 +86,21 @@ func ensureNumLed(n int32) (int8, error) {
 	return int8(n), nil
 }
 
+// DisplayValueOnTentacle display a value on a tentacle
+func (s *service) DisplayValueOnTentacle(ctx context.Context, in *pb.ValueTentacleRequest) (*pb.Ack, error) {
+	t, err := ensureTentacle(in.Tentacle)
+	if err != nil {
+		return nil, err
+	}
+	b, err := ensureBrightness(in.Brightness)
+	if err != nil {
+		return nil, err
+	}
+
+	s.p.DisplayValueOnTentacle(t, in.Val, in.MaxVal, b, in.Direction)
+	return s.apply()
+}
+
 // convert and ensure brightness is valid
 func ensureBrightness(b uint32) (uint8, error) {
 	if b > 255 {

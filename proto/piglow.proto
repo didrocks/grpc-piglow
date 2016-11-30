@@ -24,6 +24,8 @@ service PiGlow {
 
   // Set all LEDs along the whole of a tentacle to brightness
   rpc SetTentacle (TentacleRequest) returns (Ack) {}
+  // Display a value on a tentacle
+  rpc DisplayValueOnTentacle (ValueTentacleRequest) returns (Ack) {}
 }
 
 message LedRequest {
@@ -38,6 +40,14 @@ message BrightnessRequest {
 message TentacleRequest {
   int32 tentacle = 1;
   uint32 brightness = 2;
+}
+
+message ValueTentacleRequest {
+  int32 tentacle = 1;
+  double val = 2;
+  double max_val = 3;
+  uint32 brightness = 4;
+  bool direction = 5;
 }
 
 message Ack {
