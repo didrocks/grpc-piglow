@@ -63,6 +63,21 @@ func (s *service) SetRed(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetRed)
 }
 
+// SetTentacle set all LEDs along the whole of a tentacle to brightness
+func (s *service) SetTentacle(ctx context.Context, in *pb.TentacleRequest) (*pb.Ack, error) {
+	t, err := ensureTentacle(in.Tentacle)
+	if err != nil {
+		return nil, err
+	}
+	b, err := ensureBrightness(in.Brightness)
+	if err != nil {
+		return nil, err
+	}
+
+	s.p.SetTentacle(t, b)
+	return s.apply()
+}
+
 // convert and ensure num led is valid
 func ensureNumLed(n int32) (int8, error) {
 	if n < 0 || n > 17 {
@@ -77,6 +92,14 @@ func ensureBrightness(b uint32) (uint8, error) {
 		return 0, fmt.Errorf("invalid brightness value: %d", b)
 	}
 	return uint8(b), nil
+}
+
+// convert and ensure tentacle number is valid
+func ensureTentacle(t int32) (int, error) {
+	if t < 0 || t > 2 {
+		return 0, fmt.Errorf("invalid tentacle value: %d", t)
+	}
+	return int(t), nil
 }
 
 // internal apply correct changes functions
