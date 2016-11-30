@@ -10,6 +10,7 @@ It is generated from these files:
 
 It has these top-level messages:
 	LedRequest
+	BrightnessRequest
 	Ack
 */
 package proto
@@ -58,6 +59,22 @@ func (m *LedRequest) GetBrightness() uint32 {
 	return 0
 }
 
+type BrightnessRequest struct {
+	Brightness uint32 `protobuf:"varint,1,opt,name=brightness" json:"brightness,omitempty"`
+}
+
+func (m *BrightnessRequest) Reset()                    { *m = BrightnessRequest{} }
+func (m *BrightnessRequest) String() string            { return proto1.CompactTextString(m) }
+func (*BrightnessRequest) ProtoMessage()               {}
+func (*BrightnessRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+
+func (m *BrightnessRequest) GetBrightness() uint32 {
+	if m != nil {
+		return m.Brightness
+	}
+	return 0
+}
+
 type Ack struct {
 	Ok bool `protobuf:"varint,1,opt,name=ok" json:"ok,omitempty"`
 }
@@ -65,7 +82,7 @@ type Ack struct {
 func (m *Ack) Reset()                    { *m = Ack{} }
 func (m *Ack) String() string            { return proto1.CompactTextString(m) }
 func (*Ack) ProtoMessage()               {}
-func (*Ack) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (*Ack) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *Ack) GetOk() bool {
 	if m != nil {
@@ -76,6 +93,7 @@ func (m *Ack) GetOk() bool {
 
 func init() {
 	proto1.RegisterType((*LedRequest)(nil), "proto.LedRequest")
+	proto1.RegisterType((*BrightnessRequest)(nil), "proto.BrightnessRequest")
 	proto1.RegisterType((*Ack)(nil), "proto.Ack")
 }
 
@@ -90,8 +108,22 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for PiGlow service
 
 type PiGlowClient interface {
-	// SetLED
+	// Set LED n to brightness
 	SetLED(ctx context.Context, in *LedRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all LEDs to brightness
+	SetAll(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all White LEDs to brightness
+	SetWhite(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all Blue LEDs to brightness
+	SetBlue(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all Green LEDs to brightness
+	SetGreen(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all Yellow LEDs to brightness
+	SetYellow(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all Orange LEDs to brightness
+	SetOrange(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
+	// Set all Red LEDs to brightness
+	SetRed(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error)
 }
 
 type piGlowClient struct {
@@ -111,11 +143,88 @@ func (c *piGlowClient) SetLED(ctx context.Context, in *LedRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *piGlowClient) SetAll(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetAll", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetWhite(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetWhite", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetBlue(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetBlue", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetGreen(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetGreen", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetYellow(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetYellow", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetOrange(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetOrange", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piGlowClient) SetRed(ctx context.Context, in *BrightnessRequest, opts ...grpc.CallOption) (*Ack, error) {
+	out := new(Ack)
+	err := grpc.Invoke(ctx, "/proto.PiGlow/SetRed", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PiGlow service
 
 type PiGlowServer interface {
-	// SetLED
+	// Set LED n to brightness
 	SetLED(context.Context, *LedRequest) (*Ack, error)
+	// Set all LEDs to brightness
+	SetAll(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all White LEDs to brightness
+	SetWhite(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all Blue LEDs to brightness
+	SetBlue(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all Green LEDs to brightness
+	SetGreen(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all Yellow LEDs to brightness
+	SetYellow(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all Orange LEDs to brightness
+	SetOrange(context.Context, *BrightnessRequest) (*Ack, error)
+	// Set all Red LEDs to brightness
+	SetRed(context.Context, *BrightnessRequest) (*Ack, error)
 }
 
 func RegisterPiGlowServer(s *grpc.Server, srv PiGlowServer) {
@@ -140,6 +249,132 @@ func _PiGlow_SetLED_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PiGlow_SetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetAll(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetWhite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetWhite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetWhite",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetWhite(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetBlue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetBlue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetBlue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetBlue(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetGreen_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetGreen(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetGreen",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetGreen(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetYellow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetYellow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetYellow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetYellow(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetOrange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetOrange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetOrange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetOrange(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PiGlow_SetRed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrightnessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiGlowServer).SetRed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.PiGlow/SetRed",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiGlowServer).SetRed(ctx, req.(*BrightnessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PiGlow_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.PiGlow",
 	HandlerType: (*PiGlowServer)(nil),
@@ -147,6 +382,34 @@ var _PiGlow_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLED",
 			Handler:    _PiGlow_SetLED_Handler,
+		},
+		{
+			MethodName: "SetAll",
+			Handler:    _PiGlow_SetAll_Handler,
+		},
+		{
+			MethodName: "SetWhite",
+			Handler:    _PiGlow_SetWhite_Handler,
+		},
+		{
+			MethodName: "SetBlue",
+			Handler:    _PiGlow_SetBlue_Handler,
+		},
+		{
+			MethodName: "SetGreen",
+			Handler:    _PiGlow_SetGreen_Handler,
+		},
+		{
+			MethodName: "SetYellow",
+			Handler:    _PiGlow_SetYellow_Handler,
+		},
+		{
+			MethodName: "SetOrange",
+			Handler:    _PiGlow_SetOrange_Handler,
+		},
+		{
+			MethodName: "SetRed",
+			Handler:    _PiGlow_SetRed_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -156,15 +419,21 @@ var _PiGlow_serviceDesc = grpc.ServiceDesc{
 func init() { proto1.RegisterFile("piglow.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 155 bytes of a gzipped FileDescriptorProto
+	// 247 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0xc8, 0x4c, 0xcf,
 	0xc9, 0x2f, 0xd7, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x4a, 0x76, 0x5c, 0x5c,
 	0x3e, 0xa9, 0x29, 0x41, 0xa9, 0x85, 0xa5, 0xa9, 0xc5, 0x25, 0x42, 0x02, 0x5c, 0xcc, 0x79, 0xa5,
 	0xb9, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0xac, 0x41, 0x20, 0xa6, 0x90, 0x1c, 0x17, 0x57, 0x52, 0x51,
 	0x66, 0x7a, 0x46, 0x49, 0x5e, 0x6a, 0x71, 0xb1, 0x04, 0x93, 0x02, 0xa3, 0x06, 0x6f, 0x10, 0x92,
-	0x88, 0x92, 0x28, 0x17, 0xb3, 0x63, 0x72, 0xb6, 0x10, 0x1f, 0x17, 0x53, 0x7e, 0x36, 0x58, 0x1f,
-	0x47, 0x10, 0x53, 0x7e, 0xb6, 0x91, 0x31, 0x17, 0x5b, 0x40, 0xa6, 0x7b, 0x4e, 0x7e, 0xb9, 0x90,
-	0x26, 0x17, 0x5b, 0x70, 0x6a, 0x89, 0x8f, 0xab, 0x8b, 0x90, 0x20, 0xc4, 0x66, 0x3d, 0x84, 0x7d,
-	0x52, 0x5c, 0x50, 0x21, 0xc7, 0xe4, 0x6c, 0x25, 0x86, 0x24, 0x36, 0x30, 0xc7, 0x18, 0x10, 0x00,
-	0x00, 0xff, 0xff, 0x77, 0x17, 0x69, 0x53, 0xa9, 0x00, 0x00, 0x00,
+	0x88, 0x92, 0x31, 0x97, 0xa0, 0x13, 0x9c, 0x07, 0x33, 0x06, 0x55, 0x13, 0x23, 0x86, 0x26, 0x51,
+	0x2e, 0x66, 0xc7, 0xe4, 0x6c, 0x21, 0x3e, 0x2e, 0xa6, 0xfc, 0x6c, 0xb0, 0x34, 0x47, 0x10, 0x53,
+	0x7e, 0xb6, 0xd1, 0x1c, 0x66, 0x2e, 0xb6, 0x80, 0x4c, 0xf7, 0x9c, 0xfc, 0x72, 0x21, 0x4d, 0x2e,
+	0xb6, 0xe0, 0xd4, 0x12, 0x1f, 0x57, 0x17, 0x21, 0x41, 0x88, 0x7b, 0xf5, 0x10, 0xae, 0x94, 0xe2,
+	0x82, 0x0a, 0x39, 0x26, 0x67, 0x2b, 0x31, 0x08, 0x19, 0x80, 0x95, 0x3a, 0xe6, 0xe4, 0x08, 0x49,
+	0x40, 0xc5, 0x31, 0x1c, 0x84, 0xa6, 0xc3, 0x88, 0x8b, 0x23, 0x38, 0xb5, 0x24, 0x3c, 0x23, 0xb3,
+	0x24, 0x95, 0x68, 0x3d, 0x86, 0x5c, 0xec, 0xc1, 0xa9, 0x25, 0x4e, 0x39, 0xa5, 0xa9, 0x24, 0x5a,
+	0xe3, 0x5e, 0x94, 0x9a, 0x9a, 0x47, 0xb4, 0x1e, 0x63, 0x2e, 0xce, 0xe0, 0xd4, 0x92, 0xc8, 0xd4,
+	0x1c, 0x50, 0x20, 0x90, 0xa6, 0xc9, 0xbf, 0x28, 0x31, 0x2f, 0x9d, 0x78, 0xd7, 0x41, 0x82, 0x2d,
+	0x28, 0x35, 0x85, 0x58, 0x1d, 0x49, 0x6c, 0x60, 0x8e, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xbd,
+	0xd0, 0xa3, 0xbb, 0x48, 0x02, 0x00, 0x00,
 }
