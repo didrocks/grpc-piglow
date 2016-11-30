@@ -10,12 +10,12 @@ import (
 	piglow "github.com/wjessop/go-piglow"
 )
 
-// service receiving piglow rpc requests
+// service receiving piglow rpc requests.
 type service struct {
 	p *piglow.Piglow
 }
 
-// RegisterPiGlowService create a piglow object, register it with the matching protocol and grpc server
+// RegisterPiGlowService create a piglow object, register it with the matching protocol and grpc server.
 func RegisterPiGlowService(gserver *grpc.Server) error {
 
 	// Create a new Piglow
