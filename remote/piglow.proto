@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package remote;
+
+// The remote PiGlow service
+service PiGlow {
+  // SetLED
+  rpc SetLED (LedRequest) returns (Ack) {}
+}
+
+message LedRequest {
+  int32 num = 1;
+  uint32 brightness = 2;
+}
+
+message Ack {
+  bool ok = 1;
+}
