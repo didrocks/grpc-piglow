@@ -9,6 +9,7 @@ import (
 	context "golang.org/x/net/context"
 )
 
+// Set LED n to brightness
 func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
 	var err error
 
@@ -22,10 +23,7 @@ func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error
 	}
 
 	s.p.SetLED(n, b)
-	if err = s.p.Apply(); err != nil { // Apply the changes
-		log.Println("Couldn't apply changes: ", err)
-	}
-	return &pb.Ack{Ok: true}, err
+	return s.apply()
 }
 
 // convert and ensure num led is valid
@@ -42,4 +40,14 @@ func ensureBrightness(b uint32) (uint8, error) {
 		return 0, fmt.Errorf("invalid brightness value: %d", b)
 	}
 	return uint8(b), nil
+}
+
+// internal apply correct changes functions
+func (s *service) apply() (ack *pb.Ack, err error) {
+	ack = &pb.Ack{Ok: true}
+	if err = s.p.Apply(); err != nil {
+		// server side logging
+		log.Println("Couldn't apply changes: ", err)
+	}
+	return ack, nil
 }
