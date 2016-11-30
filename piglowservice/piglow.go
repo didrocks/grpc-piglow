@@ -9,6 +9,8 @@ import (
 	context "golang.org/x/net/context"
 )
 
+type brightnessFunc func(uint8)
+
 // Set LED n to brightness
 func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
 	var err error
@@ -50,4 +52,15 @@ func (s *service) apply() (ack *pb.Ack, err error) {
 		log.Println("Couldn't apply changes: ", err)
 	}
 	return ack, nil
+}
+
+// internal helper taking any piglow functions which change only brightness
+func (s *service) setBrightnessWithFunc(ctx context.Context, in *pb.LedRequest, fn brightnessFunc) (*pb.Ack, error) {
+	b, err := ensureBrightness(in.Brightness)
+	if err != nil {
+		return nil, err
+	}
+
+	fn(b)
+	return s.apply()
 }
