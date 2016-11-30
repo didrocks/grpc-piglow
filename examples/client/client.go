@@ -56,7 +56,7 @@ func main() {
 		var brightness uint32
 		if prevnum == -1 {
 			num = (int32)(r1.Intn(18))
-			brightness = 100
+			brightness = 10
 			prevnum = num
 		} else {
 			brightness = 0
@@ -64,6 +64,8 @@ func main() {
 		}
 		log.Printf("Send light command to %d\n", num)
 		_, err = c.SetLED(context.Background(), &pb.LedRequest{Num: num, Brightness: brightness})
+		//_, err = c.SetTentacle(context.Background(), &pb.TentacleRequest{Tentacle: num, Brightness: brightness})
+		//_, err = c.SetWhite(context.Background(), &pb.BrightnessRequest{Brightness: brightness})
 		log.Printf("Done")
 		if err != nil {
 			log.Fatalf("Error in setting led: %v", err)
