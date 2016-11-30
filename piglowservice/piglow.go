@@ -29,37 +29,37 @@ func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error
 }
 
 // Set all LEDs to brightness
-func (s *service) SetAll(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetAll(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetAll)
 }
 
 // SetWhite all White LEDs to brightness
-func (s *service) SetWhite(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetWhite(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetWhite)
 }
 
 // SetBlue all Blue LEDs to brightness
-func (s *service) SetBlue(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetBlue(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetBlue)
 }
 
 // SetGreen all Green LEDs to brightness
-func (s *service) SetGreen(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetGreen(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetGreen)
 }
 
 // SetYellow all WhYellowite LEDs to brightness
-func (s *service) SetYellow(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetYellow(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetYellow)
 }
 
 // SetOrange all Orange LEDs to brightness
-func (s *service) SetOrange(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetOrange(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetOrange)
 }
 
 // SetRed all Red LEDs to brightness
-func (s *service) SetRed(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error) {
+func (s *service) SetRed(ctx context.Context, in *pb.BrightnessRequest) (*pb.Ack, error) {
 	return s.setBrightnessWithFunc(ctx, in, s.p.SetRed)
 }
 
@@ -90,7 +90,7 @@ func (s *service) apply() (ack *pb.Ack, err error) {
 }
 
 // internal helper taking any piglow functions which change only brightness
-func (s *service) setBrightnessWithFunc(ctx context.Context, in *pb.LedRequest, fn brightnessFunc) (*pb.Ack, error) {
+func (s *service) setBrightnessWithFunc(ctx context.Context, in *pb.BrightnessRequest, fn brightnessFunc) (*pb.Ack, error) {
 	b, err := ensureBrightness(in.Brightness)
 	if err != nil {
 		return nil, err
