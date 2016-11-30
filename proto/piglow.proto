@@ -4,7 +4,7 @@ package proto;
 
 // The remote PiGlow service
 service PiGlow {
-  // SetLED
+  // Set LED n to brightness
   rpc SetLED (LedRequest) returns (Ack) {}
 
   // Set all LEDs to brightness
