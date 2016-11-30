@@ -1,0 +1,29 @@
+name: grpc-piglow
+version: '1.0'
+summary: Server enabling anyone on your network controlling your PiGlow
+description: |
+  This snap is the server side, enabling anyone to control your PiGlow
+  on your network. It uses mDNS to broadcast a selected IP and port that
+  others can connect clients to.
+  Calls are made through gRPC. More details on the project is available on
+  the github page at https://github.com/didrocks/grpc-piglow.
+  It does ship with an example client for demonstration purpose (which can
+  be installed on another machine).
+grade: stable
+confinement: devmode
+
+apps:
+  grpc-piglow:
+    command: client
+    plugs: [network]
+  service:
+    command: server
+    plugs: [network-bind, i2c]
+    daemon: simple
+    restart-condition: always
+
+parts:
+  grpc-piglow:
+    source: .
+    plugin: go
+    go-importpath: github.com/didrocks/grpc-piglow
