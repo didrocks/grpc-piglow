@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	pb "github.com/didrocks/grpc-piglow/remote"
+	pb "github.com/didrocks/grpc-piglow/proto"
 	piglow "github.com/wjessop/go-piglow"
 )
 
@@ -26,7 +26,7 @@ func (s *service) SetLED(ctx context.Context, in *pb.LedRequest) (*pb.Ack, error
 	return &pb.Ack{Ok: true}, err
 }
 
-//go:generate protoc -I remote/ remote/piglow.proto --go_out=plugins=grpc:remote
+//go:generate protoc -I proto/ proto/piglow.proto --go_out=plugins=grpc:proto
 func main() {
 	var p *piglow.Piglow
 	var err error

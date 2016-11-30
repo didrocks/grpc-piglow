@@ -6,14 +6,14 @@ import (
 
 	context "golang.org/x/net/context"
 
-	pb "github.com/didrocks/grpc-piglow/remote"
+	pb "github.com/didrocks/grpc-piglow/proto"
 
 	"time"
 
 	"google.golang.org/grpc"
 )
 
-//go:generate protoc -I ../../remote/ ../../remote/piglow.proto --go_out=plugins=grpc:remote
+//go:generate protoc -I ../../proto/ ../../proto/piglow.proto --go_out=plugins=grpc:proto
 func main() {
 	conn, err := grpc.Dial("192.168.0.150:9875", grpc.WithInsecure())
 	if err != nil {
