@@ -19,4 +19,5 @@ to generate your client code.
 ## Snap
 If you are using [Ubuntu Core](https://developer.ubuntu.com/en/snappy/start/raspberry-pi-2/) on your Pi, you can directly
 install the server snap with
-`snap install grpc-piglow`
+`snap install grpc-piglow --devmode --beta`.
+Devmode is needed as the rpi doesn't have the i2c interface exposed yet.
